@@ -104,6 +104,7 @@ Here we are showing PostgreSQL setup, since that is the recommendation.  MySQL(I
    See the `postgresql docs <http://www.postgresql.org/docs/9.1/static/auth-pg-hba-conf.html>`_ for details.  A simple example might be to add the following line to the top of the access control lines: 
 		
 		# TYPE  DATABASE   USER    ADDRESS  METHOD
+		
 		local   ensconce   ensconce         md5
 		
    In this example, we can also ensure that postgresql is not listening on any network ports (i.e. unix socket only).  Edit postgresql.conf and check listen_address config parameter.
