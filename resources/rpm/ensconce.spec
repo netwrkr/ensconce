@@ -45,6 +45,9 @@
 # We don't want RH helpfully recompiling our pyc files (potentially with the wrong version of python)
 %define __os_install_post %{nil}
 
+# Disable builds of debuginfo
+%define debug_package %{nil}
+
 ### Abstract ###
 
 Name:           ensconce
@@ -204,10 +207,10 @@ do
 done
 
 # And do the same thing for any RECORD metadata files.
-for file in %{buildroot}%{venvdir}/lib/python*/site-packages/*/RECORD
-do
-	%{__sed} -i -e "s|%{buildroot}%{venvdir}|%{venvdir}|" $file
-done
+#for file in %{buildroot}%{venvdir}/lib/python*/site-packages/*/RECORD
+#do
+#	%{__sed} -i -e "s|%{buildroot}%{venvdir}|%{venvdir}|" $file
+#done
 
 # Recompile the pyc files, using our final %{venvdir} as the root (rather than the current build dir)
 %{__venv_python} -c 'from compileall import *; compile_dir("%{buildroot}%{venvdir}", maxlevels=20, ddir="%{venvdir}", force=True)'
