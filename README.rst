@@ -57,8 +57,11 @@ These instructions assume CentOS 6.x; if using 5.x you will need to install pyth
 2. Start building the project by creating a virtualenv for your project and installing the dendencies.
 
 		shell$ cd /path/to/ensconce
+		
 		shell$ python -m virtualenv env
+		
 		shell$ source env/bin/activate
+		
 		(env) localhost$ python setup.py develop
 
 3. Then use the Paver "rpm" task to create your RPM package:
@@ -93,7 +96,9 @@ Here we are showing PostgreSQL setup, since that is the recommendation.  MySQL(I
    for details.
 		
 		root@localhost# su - postgres
+		
 		postgres@localhost$ createuser -P ensconce
+		
 		Enter password for new role: <enter-your-password>
    
 2. Create the database, ensuring it is owned by the user you created in step 1.  See the `postgresql docs <http://www.postgresql.org/docs/9.1/static/app-createdb.html>`_ for command details.
@@ -127,6 +132,7 @@ Start the Server
 Starting the application is a matter of starting up the web app and the Apache reverse proxy.
 
 	shell# service ensconce start
+	
 	shell# service httpd start
 
 **Once the application is started, you must visit it in your web browser to initialize the crypto engine with the passphrase you specified above (in the Initializing the Crypto step).**
