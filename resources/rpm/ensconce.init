@@ -13,7 +13,7 @@ source /etc/init.d/functions
 RETVAL=0
 prog="ensconce"
 
-export PYTHON_EGG_CACHE=/var/tmp/ensconces/egg-cache
+export PYTHON_EGG_CACHE=/var/tmp/ensconce/egg-cache
 
 DESC=ensconce
 VENV=/opt/ensconce/env
