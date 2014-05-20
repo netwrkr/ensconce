@@ -1,0 +1,10 @@
+include pavement.py
+include requirements.txt
+include ensconce/configspec.ini
+include ensconce/util/paver/defaults.config
+recursive-include static *
+recursive-include ensconce/templates *
+recursive-include data *
+prune data/sessions
+recursive-include resources *
+recursive-include migrations *

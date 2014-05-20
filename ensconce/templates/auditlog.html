@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% block title %}Audit Log{% endblock %}
+{% block content %}
+
+<h2>Auditlog</h2>
+
+<script text="text/javascript">
+$(document).ready(function() {	
+	$("input").keypress(function(event) {
+		//alert("Key pressed: " + event.which);
+	    if (event.which == 13) {
+	        event.preventDefault();
+	        $("#auditform").submit();
+	    }
+	});
+});
+</script>
+<form action="/auditlog" method="get" id="auditform">
+	<table class="data">
+		<thead>
+			<tr>
+				<th scope="col">Date/Time</th>
+				<th scope="col">Code</th>
+				<th scope="col">Operator</th>
+				<th scope="col">Object</th>
+				<th scope="col">Attributes</th>
+				<th scope="col">Comment</th>
+				<th scope="col">[Apply]</th>
+			</tr>
+			<tr>
+				<th scope="col" style="white-space: nowrap;">{{ form.start(placeholder="start", style="width: 50px; font-size: 9px") }} - {{ form.end(placeholder="end", style="width: 50px; font-size: 9px") }}</td>
+				<th scope="col">{{ form.code(style="font-size: 9px") }}</td>
+				<th scope="col">{{ form.operator(placeholder="username", style="width: 50px; font-size: 9px") }}</td>
+				<th scope="col">&nbsp;</td>
+				<th scope="col">&nbsp;</td>
+				<th scope="col">{# {{ form.comment(placeholder="comment", style="width: 50px; font-size: 9px") }} #}</td>
+				<th scope="col"><button>Apply</button></td>
+			</tr>
+		</thead>
+		<tbody>
+			{% for entry in entries %}
+			<tr>
+				<td>{{ entry.datetime.strftime("%Y-%m-%d %H:%M:%S") }}</td>
+				<td>{{ entry.code }}</td>
+				<td>{{ entry.operator_username }}</td>
+				{% if entry.object_type %}
+				<td>{{ entry.object_type }} [{{ entry.object_id }}, {{ entry.object_label }}]</td>
+				{% else %}
+				<td>&nbsp;</td>
+				{% endif %}
+				{% if entry.attributes_modified %}
+				<td>{{ entry.attributes_modified }}</td>
+				{% else %}
+				<td>&nbsp;</td>
+				{% endif %}
+				<td>{{ entry.comment }}</td>
+				<td>&nbsp;</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
+	<div class="pager">
+		Page {{ form.page(style="width: 36px; font-size: 9px") }} of {{ total_pages }}.
+	</div>
+
+</form>
+
+{% endblock %}

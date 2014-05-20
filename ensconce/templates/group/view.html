@@ -1,0 +1,96 @@
+{% extends "group/base.html" %}
+{% block title %}View Group{% endblock %}
+{% block content %}
+
+<h2>Group: <em>{{ group.name }}</em> <span class="operation">(<a href="/group/edit/{{ group.id }}" class="operation">rename</a>)</span></h2>
+
+<!--  (This isn't adding much value here.)
+<table class="data">
+    <tbody>
+        <tr>
+            <th scope="row">Name:</th>
+            <td>{{ group.name }} </td>
+        </tr>
+    </tbody>
+</table>
+
+<div class="list-page-actions">
+    <form action="/group/edit/{{ group.id }}" method="get" style="float: left">
+        <button class="submit">
+            Rename
+        </button>
+    </form>
+    <form action="/group/merge/{{ group.id }}" method="get">
+        <button class="submit">
+            Merge with Another Group
+        </button>
+    </form>
+</div>
+-->
+
+<script type="text/javascript">
+    function deleteResource(resourceid, name) {
+        var formid = "#deleteresource" + resourceid;
+        var label = name + " (id=" + resourceid + ")";
+        if (confirm("Are you sure you want to remove resource " + label)) {
+            $(formid).submit();
+        } else {
+            return false;
+        }
+    }
+</script>
+
+<h3>Resources</h3>
+
+<table class="data">
+    <thead>
+        <tr>
+            <th scope="col">Resource Name</th>
+            <th scope="col">Passwords</th>
+            <th scope="col">IP Address</th>
+            <th scope="col">Description</th>
+            <th scope="col">Tags</th>
+            <th scope="col">Edit</th>
+            <th scope="col">Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for r in group.resources.order_by('name') %}
+        {% set pw_count = r.passwords.count() %}
+        <tr align="left">
+            <td align="left"><nobr><a href="/resource/view/{{ r.id }}"><img src="/static/img/resource_ico.gif" alt="CPU" />{{ r.name }}</a></nobr></td>
+            <td>{{ pw_count }}</td>
+            <td>{{ r.addr }}</td>
+            <td>{{ r.description }}</td>
+            <td>{{ r.tags }}</td>
+            <td><a id="edit-link-{{ r.id }}" href="/resource/edit/{{ r.id }}">Edit</a></td>
+            <td>
+            {%- if pw_count == 0 -%}
+            <form id="deleteresource{{ r.id }}" action="/resource/delete" method="post">
+                <input type="hidden" value="{{ r.id }}" name="resource_id" />
+                <input type="hidden" value="/group/view/{{ group.id }}" name="redirect_to" />
+                <a id="delete-link-{{ r.id }}" href="#" onclick="deleteResource({{ r.id }}, {{ r.name|escapejs }})">Delete</a>
+            </form>
+            {%- else -%}
+            <a id="delete-link-{{ r.id }}" href="/resource/delete/{{ r.id }}">Delete</a>
+            {%- endif -%}
+            </td>            
+        </tr>
+        {% else %}
+        <tr>
+            <td colspan="7">No resources for this group.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<div class="list-page-actions">
+    <form action="/resource/add" method="get">
+        <input type="hidden" name="group_id" value="{{ group.id }}" />
+        <button class="submit">
+            Add Resource
+        </button>
+    </form>
+</div>
+
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends "user/base.html" %}
+{% block title %}Operator List{% endblock %}
+{% block content %}
+
+<h2>Operators</h2>
+
+<script type="text/javascript">
+	function deleteUser(userid, username) {
+		var formid = "#delete_" + userid;
+		var label = username + " (id=" + userid + ")";
+		if (confirm("Are you sure you want to remove user " + label)) {
+			$(formid).submit();
+		} else {
+			return false;
+		}
+	}
+</script>
+
+<table class="data">
+	<thead>
+		<tr>
+			<th>User Name</th>
+			<th>Access Level</th>
+			<th>Edit</th>
+			<th>Delete</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for user in users %}
+		<tr>
+			<td><a href="/user/view/{{ user.id }}">{{ user.username }}</a></td>
+			<td>{{ user.access.description }}</td>
+			<td class="actions"><a href="/user/edit/{{ user.id }}">Edit</a></td><td>
+			<form method="post" id="delete_{{ user.id }}" action="/user/delete">
+				<input type="hidden" name="operator_id" value="{{ user.id }}" />
+				<a href='javascript:deleteUser({{ user.id }}, "{{ user.username }}")'>Delete</a>
+			</form></td>
+		</tr>
+		{% else %}
+		<tr>
+			<td colspan="4">There appear to be no operators.  (How did <em>you</em> get here?)</td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Ensconce Log In{% endblock %}
+{% block content %}
+
+<form class="validation_form" action="/process_login" method="post" name="login_form">
+    {{ form.redirect() }}
+    <ul>
+        <li>
+            <h2>Login</h2>
+            <!--<span class="required_notification">* Denotes Required Field</span>-->
+        </li>
+        {% import "macros.inc.html" as macros %}
+        {%- if 'ldap' in auth_providers -%}
+        	{%set placeholder = "username (LDAP)" %}
+        {%- else -%}
+        	{%set placeholder = "username" %}
+        {%- endif -%}
+        {{ macros.form_field(form.username, autofocus="autofocus", required="required", placeholder=placeholder) }}
+        {{ macros.form_field(form.password, required="required") }}
+        <li>
+            <button class="submit" type="submit">
+                Log In
+            </button>
+        </li>
+    </ul>
+</form>
+
+{% endblock %}

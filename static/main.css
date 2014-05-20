@@ -1,0 +1,398 @@
+body {
+	font-family: "Lucida Sans", "Lucida Grande", "Lucida Sans Unicode", sans-serif;
+	margin: 0px;
+}
+
+h1, h2, h3 {
+    font-family: Georgia, Times, "Times New Roman", serif;
+}
+
+pre {
+	font-family: "Courier New", monospace;
+	font-size: 11px;
+}
+
+body {
+	background-position: 0px 0px;
+	background-image: url(/static/img/bg.png);
+	background-repeat: repeat-x;
+	background-color: #c8c8c8;
+}
+
+a:link {
+    color: #335ebf;
+    /*color: #805119;*/
+}
+
+a:visited {
+    color: #1c3263;
+}
+
+a:hover {    
+    color: #000;
+}
+
+/* Search Results */
+.search-results h3 {
+	border-bottom: 1px solid #aaa;
+	margin-top: 20px;
+}
+
+.search-results dl {
+	margin: 0 0 1em 0;
+	padding: 0;
+}
+.search-results dl dt {
+	font-weight: bold;
+	margin: 0;
+	padding: 0;
+}
+
+.search-results dl dd {
+	/*margin: 0 0 1em 0;*/
+	margin: 0;
+	padding: 0;
+	font-size: 0.7em;
+	font-style: italic;
+}
+
+/* MAIN LAYOUT */
+
+div#title_bar {
+    /*height: 100%;*/
+    width: 250px;
+    margin: 0px;
+    padding: 0px;
+    float: left;
+    text-align: center;
+}
+
+div#title_bar .version {
+    color: #fff;
+    font-size: 10px;
+    font-style: italic;
+}
+
+div#title_bar div#title {
+	position: relative;
+	top: 16px;
+	font-size: 24px;
+	color: #000527;
+	font-style: italic;
+	font-weight: bold;
+	text-shadow: 1px 1px 2px white, -1px -1px 2px white;
+	width: 250px;
+    text-align: center;
+}
+
+div#title_bar div#welcome {
+    margin: 10px 0px;
+    text-align: center;
+    font-size: 14px;
+    color: white;
+    font-weight: bold;
+}
+
+div#title_bar div#search {
+    width: 250px;
+    margin: auto;
+    text-align: center;
+	/*top: 80px;*/
+	font-size: 14px;
+	color: white;
+	font-weight: bold;
+}
+
+div#title_bar img#logo {
+    padding: 30px 10px;
+    border: 0px;
+}
+
+div#title_bar div#quick-nav {
+    width: 250px;
+    margin-top: 40px;
+    text-align: center;
+    font-size: 14px;
+    color: white;
+    font-weight: bold;
+}
+
+
+div#title_bar div#quick-nav form select {
+    width: 200px;
+}
+
+/* some default form element css */
+
+input, textarea, select  {
+    border:2px solid #aaa;
+    box-shadow: 0px 0px 3px #ccc, 0 10px 15px #eee inset;
+    border-radius:2px;
+    padding: 3px 8px;
+}
+
+input, textarea { /* add this to the already existing style */
+    -moz-transition: padding .25s;
+    -webkit-transition: padding .25s;
+    -o-transition: padding .25s;
+    transition: padding .25s;
+}
+
+input:focus, textarea:focus, select:focus {
+    background: #fff;
+    border:2px solid #555;
+    box-shadow: 0 0 3px #aaa;
+}
+
+/* TOP-LEVEL NAVIGATION */
+
+div#menu_bg {
+    top: 0px;
+	background-image: url(/static/img/menu_bg.png);
+	background-repeat: repeat-x;
+	height: 42px;
+	width: 100%;
+}
+
+ul#menu {
+	margin: auto;
+	list-style-type: none;
+	height: 42px;
+}
+
+ul#menu li {
+	float: left;
+}
+
+ul#menu li a {
+	background-image: url(/static/img/menu_bg_sep.png);
+	background-repeat: no-repeat;
+	background-position: right;
+	padding-right: 32px;
+	padding-left: 32px;
+	display: block;
+	line-height: 42px;
+	text-decoration: none;
+	
+	text-shadow: 1px 1px 1px black;
+	
+	font-size: 18px;
+	font-weight: bold;
+	color: #9fd574;
+}
+ul#menu li a:hover {
+	color: #9fd574;
+	text-shadow: 1px 1px 1px #509111;
+}
+
+div#sub_menu {
+    position: relative;
+    margin: auto;
+    border-bottom: 1px solid #aaa;
+}
+
+div#sub_menu ul {
+    margin: auto;
+    border-bottom: 3px solid #666;
+    background: #ccc;
+    list-style-type: none;
+}
+
+div#sub_menu ul li {
+    display: inline-block
+}
+
+div#sub_menu ul li a {
+    padding-left: 16px;
+    padding-right: 16px;
+    display: block;
+    line-height: 26px;
+    text-decoration: none;
+    color: #2F2E2F;
+    font-size: 14px;
+    font-weight: bold;
+    text-shadow: 1px 1px 1px #ccc;
+}
+
+div#sub_menu ul li a:hover {
+    text-shadow: 1px 1px 1px white;
+}
+
+
+#right_body {
+    position: absolute;
+    margin-left: 250px;
+    width: auto;
+    top: 0px;
+    height: 100%;
+    background-color: white;
+}
+
+#main_body {
+    width: 100%;
+	display: block;
+	margin: auto;
+    position: absolute;
+    top: 42px;
+	background-color: white;
+/*	border-left: 2px outset #c8c8c8;
+	border-right: 2px outset #c8c8c8;*/
+}
+
+#content {
+    padding: 10px
+}
+
+table.genpw {
+    font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+    font-size: 13px;
+    margin: 20px 40px;
+    /*width: 480px;*/
+    text-align: left;
+    border-collapse: collapse;
+}
+
+table.genpw tbody td, table.data tbody th 
+{
+    padding: 8px;
+    background: #dcefcd; 
+    border-bottom: 1px solid #fff;
+    color: #444;
+    border-top: 1px solid transparent;
+}
+
+
+table.data
+{
+    font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+    font-size: 13px;
+    margin: 20px 40px;
+    /*width: 480px;*/
+    text-align: left;
+    border-collapse: collapse;
+}
+table.data thead th
+{
+    font-size: 13px;
+    font-weight: normal;
+    padding: 8px;
+    background: #9fd574;
+    border-top: 4px solid #8AB866;
+    border-bottom: 1px solid #fff;
+    color: #000;
+}
+
+table.data tbody td, table.data tbody th 
+{
+    padding: 8px;
+    background: #dcefcd; 
+    border-bottom: 1px solid #fff;
+    color: #444;
+    border-top: 1px solid transparent;
+}
+
+table.data tbody tr th
+{
+    white-space: nowrap;
+    font-weight: bold;
+}
+
+table.data tbody tr:hover td, table.data tbody tr:hover th
+{
+    background: #a4c48a;
+    color: #000;
+}
+
+table.data tbody tr td form {
+    margin: 0px;
+    padding: 0px;
+}
+
+/* Style for container of buttons after a data form. */
+div.list-page-actions {
+    margin: 20px 40px; /* this should match data table style */
+}
+
+div.pager {
+	font-size: 10px;
+    margin: 20px 40px; /* this should match data table style */
+}
+
+input.password {
+    font-family: "Courier New", monospace;
+}
+
+.password-container {
+    width: 475px;
+    border: 1px solid black;
+    font-family: "Courier New", monospace;
+    font-size: 11px;
+    /*text-align: center;*/
+    cursor: pointer;
+    background-color: #fff0ac;
+}
+.password-container::selection {
+    background-color: #fff0ac;
+    color: black;
+}
+
+.password-container::-moz-selection {
+    background: #fff0ac;
+    color: black;
+}
+
+span.password {
+    font-family: "Courier New", monospace;
+    background-color: #fff0ac;
+}
+
+
+p.instructions {
+    text-align: center;
+    font-size: 0.9em;
+    font-style: italic;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.servererror {
+    padding: 10px;
+}
+
+.servererror h1 {
+    color: red;
+    font-weight: bold;
+}
+
+.servererror p {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.servererror p.message {
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+.servererror .traceback {
+    font-size: 0.6em;
+}
+
+.danger {
+	color: red;
+}
+
+.notification {
+    box-shadow: 0 0 5px #004fb0;
+    background-color: #96c5ff;
+    font-weight: bold;
+    padding: 4px;
+    margin: 20px 0px 0px 0px;
+}
+.notification img {
+    vertical-align: bottom;
+}
+.notification span {
+    font-size: 16px;
+    /*font-weight: bold;*/
+}

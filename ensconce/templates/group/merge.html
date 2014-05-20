@@ -1,0 +1,21 @@
+{% extends "group/base.html" %}
+{% block title %}Merge Group{% endblock %}
+{% block content %}
+{% import "macros.inc.html" as macros %}
+
+<p>Moves all resources from one group into another, and <strong>deletes</strong> the original (&quot;from&quot;) group.</p>
+<form class="validation_form" action="/group/process_merge" method="post" id="merge_form">
+    <ul>
+        <li>
+             <h2>Merge Group</h2>
+             <span class="required_notification">* Denotes Required Field</span>
+        </li>
+        {{ macros.form_field(form.from_group_id, required="required", autofocus="autofocus") }}
+        {{ macros.form_field(form.to_group_id, required="required") }}
+        <li>
+            <button class="submit" type="submit">Merge Group</button>
+        </li>
+    </ul>
+</form>
+
+{% endblock %}

@@ -1,0 +1,14 @@
+{% import "macros.inc.html" as macros %}
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#notes_decrypted").autosize();
+    });
+</script>
+
+{{ macros.form_field(form.name, required="required", autofocus="autofocus", placeholder="resource.example.com") }}
+{{ macros.form_field(form.addr, placeholder="10.0.0.1") }}
+{{ macros.form_field(form.description, placeholder="Other info (not encrypted).") }}
+{{ macros.form_field(form.notes_decrypted, placeholder="Sensitive information (encrypted).") }}
+{{ macros.form_field(form.group_ids, required="required") }}
+{{ macros.form_field(form.tags, placeholder="Tags (space-separated)") }}

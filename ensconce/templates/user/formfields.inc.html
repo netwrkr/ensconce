@@ -1,0 +1,10 @@
+{% import "macros.inc.html" as macros %}
+
+{% if externally_managed %}
+{{ macros.form_field(form.username, required="required", autofocus="autofocus", placeholder="your-username", readonly="readonly") }}
+{{ macros.form_field(form.password, placeholder="(externally managed)", class="encrypted", readonly="readonly") }}
+{% else %}
+{{ macros.form_field(form.username, required="required", autofocus="autofocus", placeholder="your-username") }}    
+{{ macros.form_field(form.password, placeholder="(secret)", class="encrypted password") }}
+{% endif %}
+{{ macros.form_field(form.access_id, required="required") }}

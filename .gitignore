@@ -1,0 +1,13 @@
+.settings
+.project
+.pydevproject
+secret.key
+data/sessions
+data/*.crt
+*.egg-info
+*.pyc
+env
+build
+dist
+development.ini
+data/

@@ -1,0 +1,103 @@
+{% macro generate_password(password_field) -%}
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#generate-pw-button").click(function() {
+            var digits = document.getElementById('pwdigits').checked;
+            var upper = document.getElementById('pwupper').checked;
+            var lower = document.getElementById('pwlower').checked;
+            var nonalpha = document.getElementById('pwnonalpha').checked;
+
+            var mylen = $('#pwlength').val();
+
+            digits = ( digits ? 1 : 0 )
+            upper = ( upper ? 1 : 0 )
+            lower = ( lower ? 1 : 0 )
+            nonalpha = ( nonalpha ? 1 : 0 )
+            nonambig = ( nonambig ? 1 : 0 )
+
+            var data = 'length=' + mylen + '&digits=' + digits + '&upper=' + upper + '&lower=' + lower + '&nonalpha=' + nonalpha + '&nonambig=' + nonambig;
+            $.ajax({
+                url : "/password/generate",
+                type : 'GET',
+                data : data,
+                cache : false,
+                success : function(html) {
+                    $('input[name=mypassword]').val(html);
+                }
+            });
+
+            return false;
+            // HTML5 buttons submit by default
+        });
+
+        $("#copy-pw-button").click(function() {
+            var pw = $('input[name=mypassword]').val();
+            $('#{{ password_field }}').val(pw);
+            return false;
+            // HTML5 buttons submit by default
+        });
+    }); 
+</script>
+
+<form accept-charset="UTF-8" action="#" method="post">
+
+
+    <table class="data">
+        <tbody>
+        <tr>
+            <th scope="row">Length</th>
+            <td><input type="text" id="pwlength" value="24" size="4" /></td>
+        </tr>
+        <tr>
+            <th scope="row">Character Classes</th>
+            <td>
+            <input type="checkbox" id="pwdigits" checked="checked" />
+            <label for="pwdigits">Digits</label>
+            
+            <input type="checkbox" id="pwupper" checked="checked" />
+            <label for="pwupper">Uppercase</label>
+            
+            <input type="checkbox" id="pwnonalpha" checked="checked" />
+            <label for="pwnonalpha">Punctuation</label>
+            
+            <input type="checkbox" id="pwlower" checked="checked" />
+            <label for="pwlower">Lowercase</label>
+            
+            <br/>
+            
+            <input type="checkbox" id="nonambig" />
+            <label for="skipambig">Skip ambiguous characters</label>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row">
+            <button id="generate-pw-button" class="submit">Generate Password</button>
+            </th>
+            <td>
+                <input type="text" name="mypassword" size="64" class="password" id="mypassword" />
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+               <button id="copy-pw-button" class="submit">Copy Password To Form</button></td>
+        </tr>
+        
+        </tbody>
+    </table>
+</form>
+
+{%- endmacro %}
+
+{% macro form_field(field) -%}
+<li>
+    {{ field.label }}
+    {% if field.errors %}
+    {% set css_class = 'field_invalid ' + kwargs.pop('class', '') %}
+    {{ field(class=css_class, **kwargs) }}
+    <span class="form_error">{{ field.errors|join('; ') }}</span>
+    {% else %}
+    {{ field(**kwargs) }}
+    {% endif %}
+</li>
+{%- endmacro %}

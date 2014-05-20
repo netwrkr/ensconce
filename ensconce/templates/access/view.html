@@ -1,0 +1,25 @@
+{% extends "access/base.html" %}
+{% block title %}View Access Level{% endblock %}
+{% block content %}
+
+<h2>Access Level: <em>{{ level.description }}</em></h2>
+
+<table class="data">
+    <thead>
+        <tr>
+            <th scope="col">Permission</th>
+            <th scope="col">Allowed</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for (value,label) in acl_labels %}
+        <tr>
+            <th scope="row">{{ label }}</th>
+            <td>{% if level_includes(level.level, value) %}Yes{% else %}No{% endif %}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<br />
+
+{% endblock %}

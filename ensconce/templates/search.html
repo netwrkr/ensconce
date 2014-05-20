@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+{% block title %}Search Results{% endblock %}
+{% block content %}
+
+<h2>Search Results</h2>
+
+{% if resource_matches or group_matches or password_matches %}
+<div class="search-results">
+	{% if resource_matches %}
+	
+	<h3>Matching Resources</h3>
+    <table class="data">
+        <thead>
+            <tr>
+                <th scope="col">Resource Name</th>
+                <th scope="col">Num Passwords</th>
+                <th scope="col">Member of Groups</th>
+                <th scope="col">Resource IP</th>
+                <th scope="col">Description</th>
+                <th scope="col">Tags</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for resource in resource_matches -%}
+            <tr>
+                <td><a href="/resource/view/{{resource.id}}">{{ resource.name }}</a></td>
+                <td>{{ resource.passwords.count() }}</td>
+                <td>{% for g in resource.groups.order_by('name') -%}
+                    <a href="/group/view/{{ g.id }}">{{ g.name }}</a>
+                    {% endfor %}</td>
+                <td>{{ resource.addr }}</td>
+                <td>{{ resource.description }}</td>
+                <td>{{ resource.tags }}</td>
+            </tr>
+            {%- endfor %}
+        </tbody>
+    </table>
+	
+	{% endif %}
+
+	{% if group_matches %}
+	<h3>Matching Groups</h3>
+	
+	<table class="data">
+        <thead>
+            <tr>
+                <th scope="col">Group Name</th>
+                <th scope="col">Num Resources</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for group in group_matches -%}
+            <tr>
+                <td><a href="/group/view/{{group.id}}">{{ group.name }}</a></td>
+                <td>{{ group.resources.count() }}</td>
+            </tr>
+            {% endfor -%}
+        </tbody>
+    </table>
+	{% endif %}
+	
+	{% if password_matches %}
+	<h3>Matching Passwords</h3>
+	
+	<table class="data">
+        <thead>
+            <tr>
+                <th scope="col">Username</th>
+                <th scope="col">Resource Name</th>
+                <th scope="col">Description</th>
+                <th scope="col">Member of Groups</th>
+                <th scope="col">Resource IP</th>
+                <th scope="col">Tags</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for password in password_matches -%}
+            <tr>
+                <td><a href="/resource/view/{{ password.resource_id }}">{{ password.username }}</a></td>
+                <td><a href="/resource/view/{{ password.resource_id }}">{{ password.resource.name }}</a></td>
+                <td>{{ password.description }}</td>
+                <td>{% for g in password.resource.groups.order_by('name') -%}
+                    <a href="/group/view/{{ g.id }}">{{ g.name }}</a>
+                    {% endfor %}
+                </td>
+                <td>{{ password.resource.addr }}</td>
+                <td>{{ password.tags }}</td>
+            </tr>
+            {%- endfor %}
+        </tbody>
+    </table>
+	{% endif %}
+	
+	{% else %}
+	<p>
+		No results matched your query.
+	</p>
+	{% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,89 @@
+{% extends "resource/base.html" %}
+{% block title %}View Resource{% endblock %}
+{% block content %}
+
+<h2>Password: <em>{{ password.username }}</em></h2>
+
+<table class="data">
+    <tbody>
+        <tr>
+            <th scope="row">Username:</th>
+            <td>{{ password.username }} </td>
+        </tr>
+        <tr>
+            <th scope="row">Password:</th>
+            <td><input id="current-password" type="text" value="{{ password.password_decrypted }}" class="password-container" readonly="readonly" />
+                <script type="text/javascript">
+            $(document).ready(function() {
+                $("#current-password").click( function() {
+                    $(this).select();
+                });
+            });
+        </script>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row">Description</th>
+            <td>{{ password.description }}</td>
+        </tr>
+        <tr>
+            <th scope="row">Tags</th>
+            <td>{{ password.tags }}</td>
+        </tr>
+        <tr>
+            <th scope="row">Resource:</th>
+            <td><a href="/resource/view/{{ password.resource.id }}">{{ password.resource.name }}</a></td>
+        </tr>
+    </tbody>
+</table>
+
+<div class="list-page-actions">
+    <form action="/password/edit/{{ password.id }}" method="get">
+        <button class="submit" id="edit-password-btn">
+            Edit Password
+        </button>
+    </form>
+</div>
+
+<h3>Password History</h3>
+
+<table class="data">
+    <thead>
+        <tr>
+            <th>Previous Password</th>
+            <th>Changed (from this password)</th>
+            <th>Changed By</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for prevpw in password.history.order_by('modified desc') %}
+        <tr>
+            <td align="center">
+            <form><input id="pw{{ prevpw.id }}" type="text" value="{{ prevpw.password_decrypted }}" class="password-container" readonly="readonly" /></form>
+            <script type="text/javascript">
+            $(document).ready(function() {
+                $("#pw{{ prevpw.id }}").click( function() {
+                    $(this).select();
+                });
+            });
+        </script>
+            </td>
+            
+            <td align="center">{{ prevpw.modified.strftime("%b %d %Y - %H:%M GMT%Z") }}</td>
+            
+            <td>{% if prevpw.modifier_id -%}
+                <a href="/user/view/{{ prevpw.modifier_id }}">{{ prevpw.modifier_username }}</a>
+            {%- else -%}
+                {{ prevpw.modifier_username }}
+            {%- endif -%}
+            </td>
+        </tr>
+        {% else %}
+        <tr>
+            <td colspan="3">No password history.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

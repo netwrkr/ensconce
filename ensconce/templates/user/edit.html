@@ -1,0 +1,27 @@
+{% extends "user/base.html" %}
+{% block title %}Edit Operator{% endblock %}
+{% block content %}
+
+<form class="validation_form" action="/user/process_edit" method="post" name="operator_form" id="operator_form">
+    {{ form.operator_id() }}
+    <ul>
+        <li>
+             <h2>Edit Operator</h2>
+             <span class="required_notification">* Denotes Required Field</span>
+        </li>
+        {% include "user/formfields.inc.html" %}
+        <li>
+            <button class="submit" type="submit">Save Operator</button>
+        </li>
+    </ul>
+</form>
+
+<br /><br/>
+{% if not externally_managed %}
+<div style="align:center">
+{% import "macros.inc.html" as macros %}
+{{ macros.generate_password(password_field="password") }}
+</div>
+{% endif %}
+
+{% endblock %}

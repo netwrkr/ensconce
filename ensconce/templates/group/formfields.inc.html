@@ -1,0 +1,7 @@
+		<li>
+            {{ form.name.label }}
+            {{ form.name(required="required", autofocus="autofocus", placeholder="My Group", class=("field_invalid" if form.name.errors else "") ) }}
+            {% if form.name.errors %}
+            <span class="form_error">{{ form.name.errors|join('; ') }}</span>
+            {% endif %}
+        </li>

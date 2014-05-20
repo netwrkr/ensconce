@@ -1,0 +1,18 @@
+{% extends "group/base.html" %}
+{% block title %}Add Group{% endblock %}
+{% block content %}
+
+<form class="validation_form" action="/group/process_add" method="post" id="group_form">
+    <ul>
+        <li>
+             <h2>Add Group</h2>
+             <span class="required_notification">* Denotes Required Field</span>
+        </li>
+        {% include "group/formfields.inc.html" %}
+        <li>
+            <button class="submit" type="submit">Add Group</button>
+        </li>
+    </ul>
+</form>
+
+{% endblock %}

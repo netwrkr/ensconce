@@ -1,0 +1,45 @@
+body {
+	background: white;
+	font-size: 12pt;
+}
+
+div#title_bar {
+    display: none;
+}
+
+div#menu_bg {
+    display: none;
+}
+
+div#sub_menu {
+    display: none;
+}
+
+div#right_body {
+    margin-left: inherit;
+}
+
+div#main_body {
+    position: relative;
+    top: 0px;
+}
+
+button {
+    display: none;
+}
+
+input, textarea, select  {
+    border: 0px;
+    box-shadow: inherit;
+    border-radius: inherit;
+}
+
+.validation_form input, .validation_form textarea, .validation_form select  {
+    border: 0px;
+    box-shadow: inherit;
+    border-radius: inherit;
+}
+
+.operation {
+    display: none;
+}

@@ -1,0 +1,33 @@
+{% import "macros.inc.html" as macros %}
+{% extends "resource/base.html" %}
+{% block title %}Delete Resource{% endblock %}
+{% block content %}
+
+<h1>Confirm Resource Delete</h1>
+
+<div class="danger">
+	<h2>Passwords to Delete</h2>
+	<p>
+		<strong>Removing the {{resource.name}} resource will also remove the following passwords:</strong>
+	</p>
+	<ul>
+	{% for p in resource.passwords.order_by('username') %}
+		<li><a href="/password/view/{{ p.id }}">{{ p.username }}</a>{% if p.description %} - {{ p.description }}{% endif %}</li>
+	{% endfor %}
+	</ul>
+</div>
+
+
+<form class="validation_form" action="/resource/delete" method="post" id="delete_form" onsubmit="return confirm('Are you sure you wish to permanently delete this resource and passwords?');">
+	<input type="hidden" name="resource_id" value="{{ resource.id }}" />
+	<input type="hidden" name="redirect_to" value="{{ redirect_to }}" />
+	<ul>
+		<li>
+			<button class="submit" type="submit">
+				Delete Resource
+			</button>
+		</li>
+	</ul>
+</form>
+
+{% endblock %}

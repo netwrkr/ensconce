@@ -1,0 +1,19 @@
+{% extends "group/base.html" %}
+{% block title %}Edit Group{% endblock %}
+{% block content %}
+
+<form class="validation_form" action="/group/process_edit" method="post" id="group_form">
+    {{ form.group_id() }}
+    <ul>
+        <li>
+             <h2>Edit Group</h2>
+             <span class="required_notification">* Denotes Required Field</span>
+        </li>
+        {% include "group/formfields.inc.html" %}
+        <li>
+            <button class="submit" type="submit">Save Group</button>
+        </li>
+    </ul>
+</form>
+
+{% endblock %}

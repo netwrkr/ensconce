@@ -1,0 +1,92 @@
+<html>
+    <head>
+        <title>{% if title_prefix %}{{ title_prefix }} {% endif %}{% block title %}Ensconce Password Manager{% endblock %}</title>
+        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+        <link rel="stylesheet" type="text/css" href="/static/main.css" media="all" />
+        <link rel="stylesheet" type="text/css" href="/static/form.css" media="all" />
+        <link rel="stylesheet" type="text/css" href="/static/print.css" media="print" />
+        <link rel="search" type="application/opensearchdescription+xml" href="/osd" title="Ensconce" />
+        <link rel="icon" type="image/x+icon" href="/static/favicon.ico" />
+        <script type="text/javascript" src="/static/jquery-1.5.2.min.js"></script>
+        <script type="text/javascript" src="/static/jquery.autosize.js"></script>
+    </head>
+    <body>
+        <div id="title_bar">
+            <!-- A temporary "logo" image http://findicons.com/icon/45522/hitchhikeguidetogalaxy1_lock?id=366470 -->
+            <a href="/"><img src="/static/img/logo.png" id="logo" /></a>
+            
+            <p class="version">Ensconce v{{ app_version }}</p>
+            
+            {% if operator_info.user_id %}
+            
+            <div id="welcome">Welcome, {{ operator_info.username }}</div>
+            <div id="search">
+                <form accept-charset="UTF-8" name="search_form" id="search_form" action="/search" method="get">
+                    <input type="text" name="searchstr" id="searchstr" placeholder="search keyword" {% if not form %}autofocus="autofocus"{% endif %} size="14" value="{{ searchstr }}" />
+                    <button class="submit">Go</button>
+                </form>
+            </div>
+            
+            <div id="quick-nav">
+                <p>Quick Nav</p>
+                <form accept-charset="UTF-8" id="quickgroup" name="quickgroup" action="/group/view" method="get">
+                {{ quickgroupform.group_id(onchange="if (this.value != '0') { this.form.submit(); }") }}
+                </form>
+            </div>
+            
+            {% endif %}
+            
+                
+        </div>
+
+        <div id="right_body">
+            
+            <div id="menu_bg">
+                <ul id="menu">
+                    <li>
+                        <a href="/group/list" id="nav-groups">Groups</a>
+                    </li>
+                    <li>
+                        <a href="/resource/add" id="nav-resources">Resources</a>
+                    </li>
+                    <li>
+                        <a href="/user/list" id="nav-users">Users</a>
+                    </li>
+                    <li>
+                        <a href="/access/list" id="nav-access">Access Levels</a>
+                    </li>
+                    <li>
+                        <a href="/auditlog" id="nav-auditlog">Audit Log</a>
+                    </li>
+                    <li>
+                        <a href="/logout" id="nav-logout">Logout</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div id="main_body">
+                
+                {% block submenu %}{% endblock %}
+                
+                {% for notification in pop_notifications() -%}
+                <div class="notification">
+                    <img src="/static/img/information.png" />
+                    <span>{{ notification }}</span>
+                </div>
+                {%- endfor %}
+                
+                <div id="content">
+                    {% block content %}{% endblock %}
+                </div>
+                
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+
+            </div>
+        </div>
+
+    </body>
+</html>

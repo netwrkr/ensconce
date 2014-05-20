@@ -1,0 +1,18 @@
+{% extends "access/base.html" %}
+{% block title %}Add Access Level{% endblock %}
+{% block content %}
+
+<form class="validation_form" action="/access/process_add" method="post" name="group_form">
+    <ul>
+        <li>
+             <h2>Add Access Level</h2>
+             <span class="required_notification">* Denotes Required Field</span>
+        </li>
+        {% include "access/formfields.inc.html" %}
+        <li>
+            <button class="submit" type="submit">Add Access Level</button>
+        </li>
+    </ul>
+</form>
+
+{% endblock %}

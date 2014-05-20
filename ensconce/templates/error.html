@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Unable to complete request{% endblock %}
+{% block content %}
+
+<div class="servererror">
+
+    <h1 style="color:red">{{ status }}</h1>
+    
+    {% if message %}
+    <p class="message">{{ message }}</p>
+    {% endif %}
+    
+    {% if traceback %}
+    <pre class="traceback">{{ traceback }}</pre>
+    {% endif %}
+
+</div>
+
+{% endblock %}

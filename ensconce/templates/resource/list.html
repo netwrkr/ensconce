@@ -1,0 +1,68 @@
+{% extends "resource/base.html" %}
+{% block title %}Resource List{% endblock %}
+{% block content %}
+
+<h2>Resource List</h2>
+
+<script type="text/javascript">
+	function deleteResource(resourceid, name) {
+		var formid = "#deleteresource" + resourceid;
+		var label = name + " (id=" + resourceid + ")";
+		if (confirm("Are you sure you want to remove resource " + label)) {
+			$(formid).submit();
+		} else {
+			return false;
+		}
+	}
+</script>
+
+<table class="data">
+	<thead>
+		<tr>
+			<th scope="col">Resource Name</th>
+			<th scope="col">Passwords</th>
+			<th scope="col">Member of Groups</th>
+			<th scope="col">Resource IP</th>
+			<th scope="col">Description</th>
+			<th scope="col">Tags</th>
+			<th scope="col">Edit</th>
+			<th scope="col">Delete</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for resource in resources %}
+		{% set pw_count = resource.passwords.count() %}
+		<tr>
+			<td><nobr><a href="/resource/view/{{resource.id}}">{{ resource.name }}</a></nobr></td>
+			<td>{{ pw_count }}</td>
+			<td>{% for g in resource.groups.order_by('name') %} <a href="/group/view/{{ g.id }}">{{ g.name }}</a>{% endfor %}</td>
+			<td>{{ resource.addr }}</td>
+			<td>{{ resource.description }}</td>
+			<td>{{ resource.tags }}</td>
+			<td><a id="edit-link-{{ resource.id }}" href="/resource/edit/{{ resource.id }}">Edit</a></td>
+			<td>
+			{%- if pw_count == 0 -%}
+			<form id="deleteresource{{ resource.id }}" action="/resource/delete" method="post">
+				<input type="hidden" value="{{ resource.id }}" name="resource_id" />
+				<a id="delete-link-{{ resource.id }}" href="#" onclick="deleteResource({{ resource.id }}, {{ resource.name|escapejs }})">Delete</a>
+			</form>
+			{%- else -%}
+			<a id="delete-link-{{ resource.id }}" href="/resource/delete/{{ resource.id }}">Delete</a>
+			{%- endif -%}
+			</td>
+		</tr>
+		{% else %}
+		<tr>
+			<td colspan="8">No resources exist. You can go <a href="/resource/add">create one</a>.</td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+
+<form id="pager_form" action="/resource/list" method="get">
+    <div class="pager">
+        Page {{ form.page(style="font-size: 9px", onchange="this.form.submit()") }} of {{ total_pages }}.
+    </div>
+</form>
+
+{% endblock %}

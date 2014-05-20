@@ -1,0 +1,45 @@
+{% extends "access/base.html" %}
+{% block title %}Access Level List{% endblock %}
+{% block content %}
+
+<h2>Access Levels</h2>
+
+<script type="text/javascript">
+    function deleteLevel(levelid, desc) {
+        var formid = "#delete_" + levelid;
+        var label = desc + " (id=" + levelid + ")";
+        if (confirm("Are you sure you want to remove access level " + label)) {
+            $(formid).submit();
+        } else {
+            return false;
+        }
+    }
+</script>
+
+<table class="data">
+    <thead>
+        <tr>
+            <th scope="col">Label</th>
+            <th scope="col">Active Users</th>
+            <th scope="col">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for level in access %}
+        <tr>
+            <td><a href="/access/view/{{ level.id }}">{{ level.description }}</a></td>
+            {% set user_count = level.operators.count() %}
+            <td>{{ user_count }}</td>
+            <td>{% if user_count == 0 -%}
+            <form action="/access/delete" method="post" id="delete_{{ level.id }}">
+                <input type="hidden" name="access_id" value="{{ level.id }}" />
+                <a href='javascript:deleteLevel({{ level.id }}, "{{ level.description }}")'>Delete</a>
+            </form> {%- else -%}
+            (in-use)
+            {%- endif %}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends "group/base.html" %}
+{% block title %}Group List{% endblock %}
+{% block content %}
+
+<h2>Groups</h2>
+
+
+<script type="text/javascript">
+    function deleteGroup(resourceid, name) {
+        var formid = "#deletegroup" + resourceid;
+        var label = name + " (id=" + resourceid + ")";
+        if (confirm("Are you sure you want to remove group " + label)) {
+            $(formid).submit();
+        } else {
+            return false;
+        }
+    }
+</script>
+
+
+<table class="data">
+    <thead>
+        <tr>
+            <th>Group Name</th>
+            <th>Num Resources</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for group in groups %}
+        {% set resource_count = group.resources.count() %}
+        <tr>
+            <td><a href="/group/view/{{ group.id }}">{{ group.name }}</a></td>
+            <td>{{ resource_count }}</td>
+            <td><a href="/group/edit/{{ group.id }}">Edit</a></td>
+            <td>{%- if resource_count == 0 -%}
+                <form id="deletegroup{{ group.id }}"  action="/group/delete" method="post">
+                <input type="hidden" value="{{ group.id }}" name="group_id" />
+                <a id="delete-link-{{ group.id }}" href="javascript:deleteGroup({{ group.id }}, {{ group.name|escapejs }})">Delete</a>
+            	</form>
+            {%- else -%}
+            <a id="delete-link-{{ group.id }}" href="/group/delete/{{ group.id }}">Delete</a></td>
+            {%- endif -%}
+        </tr>
+        {% else %}
+        <tr>
+            <td colspan="4">No groups exist. You can go <a href="/group/add">create one</a>.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

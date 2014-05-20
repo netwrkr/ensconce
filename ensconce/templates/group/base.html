@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block submenu %}
+<div id="sub_menu">
+    <ul>
+        <li><a href="/group/list" id="subnav-list">List Groups</a></li>
+        <li><a href="/group/add" id="subnav-create">Create New Group</a></li>
+        <li><a href="/group/export{% if group and group.id %}/{{ group.id }}{% endif %}" id="subnav-export">Export Group</a></li>
+        <li><a href="/group/merge" id="subnav-merge">Merge Group</a></li>
+    </ul>
+</div>
+{% endblock %}

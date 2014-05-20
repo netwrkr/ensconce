@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Enter Passphrase{% endblock %}
+{% block content %}
+
+<form class="validation_form" action="/initialize" method="post" name="passphrase_form">
+    <ul>
+        <li>
+            <h2>Enter Encryption Passphrase</h2>
+            <!--<span class="required_notification">* Denotes Required Field</span>-->
+        </li>
+        {% import "macros.inc.html" as macros %}
+        {{ macros.form_field(form.passphrase, autofocus="autofocus", required="required", placeholder="my-secret-password", autocomplete="off") }}
+        <li>
+            <button class="submit" type="submit">
+                Initialize
+            </button>
+        </li>
+    </ul>
+</form>
+
+{% endblock %}

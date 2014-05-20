@@ -1,0 +1,153 @@
+{% extends "resource/base.html" %}
+{% block title %}View Resource{% endblock %}
+{% block content %}
+
+<script type="text/javascript">
+
+    $(document).ready(function() {
+        $("#notes").autosize();
+    });
+</script>
+
+<h2>Resource: <em>{{ resource.name }}</em></h2>
+
+<table class="data">
+    <tbody>
+        <tr>
+            <th scope="row">Name:</th>
+            <td>{{ resource.name }}</td>
+        </tr>
+        <tr>
+            <th scope="row">IP (if applicable)</th>
+            <td>{{ resource.addr }}</td>
+        </tr>
+        <tr>
+            <th scope="row">Description</th>
+            <td>{{ resource.description }}</td>
+        </tr>
+        <tr>
+            <th scope="row">Additional Information</th>
+            <td><textarea readonly rows="4" cols="40" name="notes" id="notes">{{ resource.notes_decrypted }}</textarea></td>
+        </tr>
+        <tr>
+            <th scope="row">Groups</th>
+            <td> {% for g in resource.groups %} <a href="/group/view/{{ g.id }}">{{ g.name }}</a> {% endfor %} </td>
+        </tr>
+        <tr>
+            <th scope="row">Tags</th>
+            <td>{{ resource.tags }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<div class="list-page-actions">
+    <form action="/resource/edit/{{ resource.id }}" method="get">
+        <button class="submit">
+            Edit Resource
+        </button>
+    </form>
+</div>
+
+<script type="text/javascript">
+
+    function revealPassword(id, callback) {
+        var data = 'password_id=' + id;
+        $.ajax({
+            url : "/password/reveal",
+            type : 'GET',
+            data : data,
+            cache : false,
+            success : function(result) {
+                var pwfieldid = "#pw" + id;
+                $(pwfieldid).val(result);
+                $(pwfieldid).show();
+                $(pwfieldid).autosize();
+                callback();
+            },
+            error : function (xhr, ajaxOptions, thrownError) {
+                if (xhr.status == 403) {
+                    alert("Your session has been disconnected; You must re-authenticate to view password.");
+                } else {
+                    alert("Error retrieving password: " + thrownError + ", status = "+xhr.status +"\nIf problem persists contact support.");
+                }
+                location.reload();
+            }
+        });
+    }
+    function deletePassword(pwid, name) {
+        var formid = "#delpw" + pwid;
+        var label = name + " (id=" + pwid + ")";
+        if (confirm("Are you sure you want to remove password for " + label)) {
+            $(formid).submit();
+        } else {
+            return false;
+        }
+    }
+</script>
+
+<table class="data">
+    <thead>
+    <tr>
+        <th>Username</th>
+        <th>Password</th>
+        <th>Description</th>
+        <th>Tags</th>
+        <th>View/History</th>
+        <th>Edit</th>
+        <th>Delete</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for cred in resource.passwords.order_by('username') %}
+    <tr>
+        <td>{{ cred.username }}</td>
+        <td style="width: 480px;">
+        <textarea id="pw{{ cred.id }}" class="password-container" readonly="readonly" style="height: 24px;"></textarea>
+        <a id="lnk{{ cred.id }}" href="#">Password</a>
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $("#pw{{ cred.id }}").hide();
+                $("#pw{{ cred.id }}").click( function() {
+                    $(this).select();
+                });
+                $("#lnk{{ cred.id }}").click( function() {
+                    revealPassword({{ cred.id }}, function() {
+                        $("#pw{{ cred.id }}").select();
+                        $("#lnk{{ cred.id }}").hide();
+                    });
+                    return false;
+            });
+        });
+        </script></td>
+        <td>{{ cred.description }}</td>
+        <td>{{ cred.tags }}</td>
+        <td>
+            <a href="/password/view/{{ cred.id }}">History</a></td>
+        <td><a href="/password/edit/{{ cred.id }}">Edit</a></td>
+        <td>
+            <form id="delpw{{ cred.id }}" action="/password/delete" method="post">
+                <input type="hidden" value="{{ cred.id }}" name="password_id" />
+                <a id="delete-link-{{ cred.id }}" href="#" onclick="deletePassword({{ cred.id }}, {{ cred.username|escapejs }})">Delete</a>
+            </form>
+        </td>
+    </tr>
+    {% else %}
+    <tr>
+        <td colspan="7">No passwords for this resource.</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<div class="list-page-actions">
+
+    <form action="/password/add" method="get" id="add_password_form">
+        <input type="hidden" name="resource_id" value="{{ resource.id }}" />
+        <button class="submit">
+            Add a Password
+        </button>
+    </form>
+
+</div>
+
+{% endblock %}

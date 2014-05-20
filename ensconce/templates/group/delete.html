@@ -1,0 +1,61 @@
+{% import "macros.inc.html" as macros %}
+{% extends "group/base.html" %}
+{% block title %}Delete Group{% endblock %}
+{% block content %}
+
+<h1>Confirm Group Delete</h1>
+
+{% if del_resources %}
+<div class="danger">
+	<h2>Resources to Delete</h2>
+	<p>
+		<strong>Removing this group will remove the following resources and passwords (which only exist in this group):</strong>
+	</p>
+	<p>
+		If you would like to keep these resources, add them to other groups.
+	</p>
+	{% for r in del_resources %}
+	<ul>
+		<li>
+			<a href="/resource/view/{{ r.id }}">{{ r.name }}</a>{% if r.description %} - {{ r.description }}{% endif %}
+			{% if r.passwords.count() %}
+			<br/>Passwords:
+			<ul>
+				{% for p in r.passwords.order_by('username') %}
+				<li><a href="/password/view/{{ p.id }}">{{ p.username }}</a>{% if p.description %} - {{ p.description }}{% endif %}</li>
+				{% endfor %}
+			</ul>
+			{% endif %}
+		</li>
+	</ul>
+	{% endfor %}
+</div>
+{% endif %}
+
+{% if mod_resources %}
+<h2>Resources to Modify</h2>
+<p>
+	Removing this group will modify the following resources (to remove group association):
+</p>
+
+{% for r in mod_resources %}
+<ul>
+	<li>
+		<a href="/resource/view/{{ r.id }}">{{ r.name }}</a>{% if r.description %} - {{ r.description }}{% endif %}
+	</li>
+</ul>
+{% endfor %}
+{% endif %}
+
+<form class="validation_form" action="/group/delete" method="post" id="delete_form" onsubmit="return confirm('Are you sure you wish to permanently delete this group and specified resources?');">
+	<input type="hidden" name="group_id" value="{{ group_id }}" />
+	<ul>
+		<li>
+			<button class="submit" type="submit">
+				Delete Group
+			</button>
+		</li>
+	</ul>
+</form>
+
+{% endblock %}

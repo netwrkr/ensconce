@@ -1,0 +1,26 @@
+{% extends "password/base.html" %}
+{% block title %}Edit or Delete a Password{% endblock %}
+{% block content %}
+
+<form class="validation_form" action="/password/process_edit" method="post" name="password_form">
+    {{ form.password_id() }}
+    <ul>
+        <li>
+             <h2>Edit Password</h2>
+             <span class="required_notification">* Denotes Required Field</span>
+        </li>
+        {% include "password/formfields.inc.html" %}
+        <li>
+            <button class="submit" type="submit" id="save-password-btn">Save Password</button>
+        </li>
+    </ul>
+</form>
+
+<br /><br/>
+
+<div style="align:center">
+{% import "macros.inc.html" as macros %}
+{{ macros.generate_password(password_field="password_decrypted") }}
+</div>
+
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends "resource/base.html" %}
+{% block title %}Add Resource{% endblock %}
+{% block content %}
+
+<form class="validation_form" action="/resource/process_add" method="post" name="resource_form" id="resource_form">
+    <ul class="fields">
+        <li>
+             <h2>Add Resource</h2>
+             <span class="required_notification">* Denotes Required Field</span>
+        </li>
+        {% include "resource/formfields.inc.html" %}
+        <li>
+            <button class="submit" type="submit">Add Resource</button>
+        </li>
+    </ul>
+</form>
+
+{% endblock %}

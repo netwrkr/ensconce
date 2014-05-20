@@ -1,0 +1,19 @@
+{% extends "resource/base.html" %}
+{% block title %}Edit Resource{% endblock %}
+{% block content %}
+
+<form class="validation_form" action="/resource/process_edit" method="post" name="resource_form" id="resource_form">
+    {{ form.resource_id() }}
+    <ul class="fields">
+        <li>
+             <h2>Edit Resource</h2>
+             <span class="required_notification">* Denotes Required Field</span>
+        </li>
+        {% include "resource/formfields.inc.html" %}
+        <li>
+            <button class="submit" type="submit">Save Resource</button>
+        </li>
+    </ul>
+</form>
+
+{% endblock %}

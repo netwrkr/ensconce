@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/" xmlns:moz="http://www.mozilla.org/2006/browser/search/">
+    <ShortName>Ensconce</ShortName>
+    <Description>Ensconce Password Manager Search Provider</Description>
+    <Image height="16" width="16" type="image/x-icon">{{ base_url }}static/favicon.ico</Image>
+    <Image height="48" width="48" type="image/png">{{ base_url }}static/img/logo48.png</Image>
+    <Url type="text/html" template="{{ base_url }}search?searchstr={searchTerms}"/>
+    <Query role="example" searchTerms="host.example.com"/>
+    <InputEncoding>UTF-8</InputEncoding>
+</OpenSearchDescription>

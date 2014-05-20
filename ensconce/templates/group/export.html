@@ -1,0 +1,23 @@
+{% extends "group/base.html" %}
+{% block title %}Export Group{% endblock %}
+{% block content %}
+{% import "macros.inc.html" as macros %}
+
+<p>Exports all resources and associated passwords for a single group.</p>
+<form class="validation_form" action="/group/export" method="post" id="export_form">
+    <ul>
+        <li>
+             <h2>Export Group</h2>
+             <span class="required_notification">* Denotes Required Field</span>
+        </li>
+        {{ macros.form_field(form.group_id, required="required", autofocus="autofocus") }}
+        {{ macros.form_field(form.passphrase, required="required", placeholder="strong passphrase (min 12 char)") }}
+        {{ macros.form_field(form.passphrase_repeat, required="required", placeholder="(repeat)") }}
+        {{ macros.form_field(form.format, required="required") }}
+        <li>
+            <button class="submit" type="submit">Export Group</button>
+        </li>
+    </ul>
+</form>
+
+{% endblock %}

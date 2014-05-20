@@ -1,0 +1,6 @@
+{% import "macros.inc.html" as macros %}
+
+{{ macros.form_field(form.username, required="required", autofocus="autofocus", placeholder="your-username") }}
+{{ macros.form_field(form.password_decrypted, required="required", placeholder="<secret>", class="encrypted password") }}
+{{ macros.form_field(form.description, placeholder="Other info (not encrypted).") }}
+{{ macros.form_field(form.tags, placeholder="Tags (space-separated)") }}

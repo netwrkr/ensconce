@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Ensconce Password Manager{% endblock %}
+{% block content %}
+
+<h2>Welcome, {{ operator_info.username }}!</h2>
+
+<h2>Your Recent Password Views</h2>
+<table class="data">
+    <thead>
+        <tr>
+            <th scope="col">Username</th>
+            <th scope="col">Resource</th>
+            <th scope="col">Member of Groups</th>
+            <th scope="col">Date</th>
+        </tr>
+    </thead>
+    <tbody>
+    {%- for recent in recent_pw_views -%}
+    {%- set entity = recent.lookup_entity() -%}
+        {%- if entity -%}
+        <tr>
+            <td><strong><a href="/password/view/{{ entity.id }}">{{ entity.username }}</a></strong></td>
+            <td><strong><a href="/resource/view/{{ entity.resource.id }}">{{ entity.resource.name }}</a></strong></td>
+            <td>{% for g in entity.resource.groups.order_by('name') %} <a href="/group/view/{{ g.id }}">{{ g.name }}</a>{% endfor %}</td>
+            <td>{{ recent.datetime.strftime("%a %b %d - %H:%M GMT%Z") }}</td>
+        </tr>
+        {%- endif -%}
+    {% else %}
+        <tr>
+            <td colspan="4">You must be new around here.</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
