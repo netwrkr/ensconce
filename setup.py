@@ -9,7 +9,7 @@ def get_requirements():
 
 setup(
     name='ensconce',
-    version='1.3',
+    version='1.4',
     description='Ensconce Password Manager',
     license='BSD',
     install_requires=get_requirements(),  
