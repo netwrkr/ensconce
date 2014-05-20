@@ -64,7 +64,7 @@ class PasswordHistoryTest(SeleniumTestController):
         self.assertTrue(input_el is not None, "Expected to find an input element for pw hist.")
         
     def test_delete(self):
-        """ Test deleting a password with history (PW-71). """
+        """ Test deleting a password with history. """
         self.navigate_to_resource("host1.example.com")
         
         history_links = self.wd.find_elements(By.LINK_TEXT, "History")
