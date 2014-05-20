@@ -101,10 +101,13 @@ Here we are showing PostgreSQL setup, since that is the recommendation.  MySQL(I
 		postgres@localhost$ createdb -O ensconce -E UTF8 ensconce
    
 3. Adjust your `pg_hba.conf` file to provide access for the new user.   Again there are lots of ways to do this, some more secure than others.  
-   See the `postgresql docs <>`_ for details.  A simple example might be to add the following line to the top of the access control lines: 
+   See the `postgresql docs <http://www.postgresql.org/docs/9.1/static/auth-pg-hba-conf.html>`_ for details.  A simple example might be to add the following line to the top of the access control lines: 
    
 		# TYPE  DATABASE   USER    ADDRESS  METHOD
 		local   ensconce   ensconce         md5
+   
+   In this example, we can also ensure that postgresql is not listening on any network ports (i.e. unix socket only).  Edit postgresql.conf and check listen_address config parameter.
+   
 
 Initialize the Crypto
 ---------------------
