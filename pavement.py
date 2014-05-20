@@ -11,12 +11,11 @@ from paver.tasks import BuildFailure
 from paver.path import path
 from Crypto.Random import get_random_bytes
 
+import pkg_resources
 try:
-    import pkg_resources
     pkg_resources.get_distribution("ensconce")
 except:
-    raise
-    #raise BuildFailure("This pavement script must be run from within a configured virtual environment.")
+    raise BuildFailure("This pavement script must be run from within a configured virtual environment.")
 
 from alembic import command
 from Crypto.Random import get_random_bytes
