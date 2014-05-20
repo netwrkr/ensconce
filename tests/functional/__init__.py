@@ -37,7 +37,7 @@ def get_server_information():
     server_scheme = sel_config.get('server_scheme', 'http')
     server_hostname = sel_config.get('server_hostname', socket.getfqdn())
     server_port = sel_config.get('server_port', config['server.socket_port'])
-    return '{}://{}:{}'.format(server_scheme, server_hostname, server_port)
+    return '{0}://{1}:{2}'.format(server_scheme, server_hostname, server_port)
 
 def get_configured_remote_drivers():
     """
