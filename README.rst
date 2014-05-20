@@ -4,20 +4,20 @@ maintained in a single, central location and are only stored encrypted.
 
 **Current Features:**
 
- * Passwords and resource notes fields are encrypted in the database with a master key (symmetric).  The key is stored in 
-   memory upon application initialization and is used to decrypted the encrypted fields on demand.
- * Organization into Groups (top-level), Resources (e.g. hosts/systems), and Credentials.
- * Authentication backends to LDAP or internal database.  LDAP authenticator can restrict access to specific group(s).
- * Detailed audit logs of view/mod/delete activities.
- * Password history is maintained for credentials.
- * Support for exporting passwords to encrypted file formats.
- * JSON-RPC 2.0 API for reading and modifying passwords.
+* Passwords and resource notes fields are encrypted in the database with a master key (symmetric).  The key is stored in 
+  memory upon application initialization and is used to decrypted the encrypted fields on demand.
+* Organization into Groups (top-level), Resources (e.g. hosts/systems), and Credentials.
+* Authentication backends to LDAP or internal database.  LDAP authenticator can restrict access to specific group(s).
+* Detailed audit logs of view/mod/delete activities.
+* Password history is maintained for credentials.
+* Support for exporting passwords to encrypted file formats.
+* JSON-RPC 2.0 API for reading and modifying passwords.
  
 **Major Planned Features:**
 
- * Restrictions on password access within the system.  (Currently to restrict by groups, you would need to setup 
-   different instances of the password manager and control login access.)
- * More modern UI, enhanced support for large numbers of password groups.
+* Restrictions on password access within the system.  (Currently to restrict by groups, you would need to setup 
+  different instances of the password manager and control login access.)
+* More modern UI, enhanced support for large numbers of password groups.
 
 **IMPORTANT:** Ensconce is designed to be a secure password storage system; however, there are a number of considerations 
 that affect the overall security fo the system.
