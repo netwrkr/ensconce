@@ -39,36 +39,39 @@ that affect the overall security fo the system.
    otherwise make decrypted contents accessible, any benefit of database-level encryption will be lost.
   
   
-# Installation
+Installation
+============
 
 Ensconce is designed to be installed using pip or easy_install; however, RPM packaging support is also provided for CentOS 5.x and 6.x to 
 simplify installation on those platforms.  Since production setup is simpler from finished packages, we will use that as our example here. 
 
-## Building the RPM Packages
+Building the RPM Packages
+-------------------------
 
 These instructions assume CentOS 6.x; if using 5.x you will need to install python26 packages from EPEL.
 
-Ensure you have the necessary tools in your environment:
+1. Ensure you have the necessary tools in your environment:
 
-    shell# yum install rpmbuild buildsys-macros gcc openldap-devel postgresql-devel mysql-devel
+		shell# yum install rpmbuild buildsys-macros gcc openldap-devel postgresql-devel mysql-devel
 
-Start building the project by creating a virtualenv for your project and installing the dendencies.
+2. Start building the project by creating a virtualenv for your project and installing the dendencies.
 
-    shell$ cd /path/to/ensconce
-    shell$ python -m virtualenv env
-    shell$ source env/bin/activate
-    (env) localhost$ python setup.py develop
+		shell$ cd /path/to/ensconce
+		shell$ python -m virtualenv env
+		shell$ source env/bin/activate
+		(env) localhost$ python setup.py develop
 
-Then use the Paver "rpm" task to create your RPM package:
+3. Then use the Paver "rpm" task to create your RPM package:
 
-    (env) localhost$ paver rpm
+		(env) localhost$ paver rpm
 
-If you are building an RPM of a current development version, you will need to use the "--testing" flag.
+4. If you are building an RPM of a current development version, you will need to use the "--testing" flag.
 
-    (env) localhost$ paver rpm --testing 
+		(env) localhost$ paver rpm --testing 
 
 
-## Install from RPM
+Install from RPM
+----------------
 
 1. First install the RPM package itself:
 
@@ -81,9 +84,10 @@ If you are building an RPM of a current development version, you will need to us
 3. Edit the `/etc/ensconce/logging.cfg` to setup logging for your application.  Syslog is the recommended (and default) destination,
    but any python logging setup will work.
 
-### Setup and Initialize the Database
+Setup and Initialize the Database
+---------------------------------
 
-#### PostgreSQL Setup
+Here we are showing PostgreSQL setup, since that is the recommendation.  MySQL(InnoDB) is also supported.
 
 1. Create the database user.  You may wish to do this differently depending on your needs. See the `postgresql docs <http://www.postgresql.org/docs/9.1/static/app-createuser.html>`_ 
    for details.
@@ -102,23 +106,23 @@ If you are building an RPM of a current development version, you will need to us
 		# TYPE  DATABASE   USER    ADDRESS  METHOD
 		local   ensconce   ensconce         md5
 
-### Initialize the Crypto
+Initialize the Crypto
+---------------------
 
 Before you can begin using the system (or start the web application), you will need to setup the encryption.  Ensconce ships with a commandline utility suite to help out here.
 
-.. code-block:: none
-    shell# /opt/ensconce/env/bin/paver -f /opt/ensconce/pavement.py init_crypto
+	shell# /opt/ensconce/env/bin/paver -f /opt/ensconce/pavement.py init_crypto
 
 Follow the interactive prompts.  Be very careful when entering the passphrase to not include whitespace etc.
 Take advantage of the fact that the interactive prompts will print out the MD5 to double-check that everything is correct.  
 **Getting this wrong could have serious data-loss consequences.**
 
-### Start the Server
+Start the Server
+----------------
 
 Starting the application is a matter of starting up the web app and the Apache reverse proxy.
 
-.. code-block:: none
-    shell# service ensconce start
-    shell# service httpd start
+	shell# service ensconce start
+	shell# service httpd start
 
 **Once the application is started, you must visit it in your web browser to initialize the crypto engine with the passphrase you specified above (in the Initializing the Crypto step).**
